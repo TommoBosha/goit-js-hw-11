@@ -32,7 +32,8 @@ const createGallery = async () => {
         Notify.success(`Hooray! We found ${totalHits} images.`);
       }
       renderGallery(data.hits);
-      SimpleLightbox = new SimpleLightbox('.gallery a').refresh();
+      const simpleLightbox = new SimpleLightbox('.gallery a');
+      simpleLightbox.refresh();
       watcher.observe(document.querySelector('.gallery-item:last-child'));
     } else {
       Notify.info('Sorry, there are no images matching your search query. Please try again.');

@@ -1,12 +1,12 @@
 
+import { refs } from './refs.js';
 
-const gallery = document.querySelector('.gallery');
 
 export function renderGallery(images) {
-  const markup = images
-    .map(image => {
-      const { largeImageURL, webformatURL, tags, likes, views, comments, downloads } = image;
-      return `<li class='gallery-item'>
+    const markup = images
+        .map(image => {
+            const { largeImageURL, webformatURL, tags, likes, views, comments, downloads } = image;
+            return `<li class='gallery-item'>
     <a class='photo-card' href='${largeImageURL}'>
         <img src='${webformatURL}' data-source='${largeImageURL}' alt='${tags}' loading='lazy' />
         <div class='info'>
@@ -25,8 +25,8 @@ export function renderGallery(images) {
         </div>
     </a>
 </li>`;
-    })
-    .join('');
+        })
+        .join('');
 
-  gallery.insertAdjacentHTML('beforeend', markup);
+    refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
