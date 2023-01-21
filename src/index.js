@@ -1,21 +1,18 @@
 
-import { Notify } from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import { refs } from './js/refs.js';
 import { fetchImg, fetchImgOptions } from './js/fetchImages.js';
-import cardMarkup from './templates/cardMarkup.hbs';
+import { renderGallery } from './js/cardMarkup.js';
 
-const ligthbox = new SimpleLightbox('.gallery a', { captionDelay: 200 });
+
 
 let hits = [];
 let totalHits = 0;
 
-const markup = newHits => {
-  refs.gallery.insertAdjacentHTML('beforeend', cardMarkup(newHits));
-  ligthbox.refresh();
-};
+
 
 const watcher = new IntersectionObserver(([lastCard], observer) => {
   lastCard.isIntersecting && hits.length !== totalHits ?
@@ -34,7 +31,8 @@ const createGallery = async () => {
       if (fetchImgOptions.page === 1) {
         Notify.success(`Hooray! We found ${totalHits} images.`);
       }
-      markup(data.hits);
+      renderGallery(data.hits);
+      SimpleLightbox = new SimpleLightbox('.gallery a').refresh();
       watcher.observe(document.querySelector('.gallery-item:last-child'));
     } else {
       Notify.info('Sorry, there are no images matching your search query. Please try again.');
@@ -60,5 +58,3 @@ const onSearch = event => {
 };
 
 refs.form.addEventListener('submit', onSearch);
-
-// for commit
